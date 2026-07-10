@@ -51,63 +51,61 @@ class SurveyController extends Controller
      */
     public function store(StoreSurveyRequest $request)
     {
-        // dd($request->all());
+        try {
 
-        try{
+            DB::transaction(function () use ($request) 
+            {
 
-            DB::transaction(function () use ($request) {
                 $survey = Survey::create([
-                    'client_id' => $request->client_id,
-                    'title' => $request->title,
+                    'client_id'   => $request->client_id,
+                    'title'       => $request->title,
                     'description' => $request->description,
-                    'slug' => Str::slug($request->title) . '-' . time(),
-                    'status' => $request->status,
+                    'slug'        => Str::slug($request->title) . '-' . time(),
+                    'status'      => $request->status,
                 ]);
 
                 foreach ($request->questions as $questionIndex => $questionData) 
                 {
+
                     $question = $survey->questions()->create([
-
                         'question'   => $questionData['question'],
-
                         'type'       => $questionData['type'],
-
                         'required'   => isset($questionData['required']),
-
                         'sort_order' => $questionIndex,
-
                     ]);
 
-                    if (isset($questionData['options'])) 
+                    if (!empty($questionData['options'])) 
                     {
 
                         foreach ($questionData['options'] as $optionIndex => $option) 
                         {
-                            if (trim($option) == '') {
+
+                            if (trim($option) === '') {
                                 continue;
                             }
 
                             $question->options()->create([
-                                'option' => $option,
-                                'sort_order'  => $optionIndex,
+                                'option'     => $option,
+                                'sort_order' => $optionIndex,
                             ]);
                         }
-
                     }
                 }
 
-                
             });
 
-        } catch (\Exception $e){
+            return redirect()
+                ->route('surveys.index')
+                ->with('success', 'Survey created successfully.');
 
-            dd($e->getMessage());
+        } catch (\Throwable $e) {
 
+            report($e);
+
+            return back()
+                ->withInput()
+                ->with('error', 'Something went wrong while creating the survey.');
         }
-
-        return redirect()
-            ->route('surveys.index')
-            ->with('success', 'Survey created successfully');
     }
 
     /**
@@ -138,22 +136,16 @@ class SurveyController extends Controller
      */
     public function update(UpdateSurveyRequest $request, Survey $survey)
     {
-
-        try{
+        try {
 
             DB::transaction(function () use ($request, $survey) {
 
                 $survey->update([
-                    'client_id' => $request->client_id,
-                    'title' => $request->title,
+                    'client_id'   => $request->client_id,
+                    'title'       => $request->title,
                     'description' => $request->description,
-                    'status' => $request->status,
+                    'status'      => $request->status,
                 ]);
-
-                // Delete old options first
-                foreach ($survey->questions as $question) {
-                    $question->options()->delete();
-                }
 
                 // Delete old questions
                 $survey->questions()->delete();
@@ -169,34 +161,35 @@ class SurveyController extends Controller
                     ]);
 
                     // Create options
-                    if (!empty($questionData['options'])) 
-                    {   
-                        foreach ($questionData['options'] as $optionIndex => $option) 
-                        {
-                            if (trim($option) == '') {
+                    if (!empty($questionData['options'])) {
+
+                        foreach ($questionData['options'] as $optionIndex => $option) {
+
+                            if (trim($option) === '') {
                                 continue;
                             }
 
                             $question->options()->create([
-                                'option' => $option,
-                                'sort_order'  => $optionIndex,
+                                'option'     => $option,
+                                'sort_order' => $optionIndex,
                             ]);
                         }
                     }
-
                 }
+            });
 
-            });            
+            return redirect()
+                ->route('surveys.index')
+                ->with('success', 'Survey updated successfully.');
 
-        } catch(\Exception $e){
+        } catch (\Throwable $e) {
 
-            dd($e->getMessage());
+            report($e);
 
+            return back()
+                ->withInput()
+                ->with('error', 'Something went wrong while updating the survey.');
         }
-
-        return redirect()
-            ->route('surveys.index')
-            ->with('success', 'Survey updated successfully.');
     }
 
     /**
@@ -204,10 +197,24 @@ class SurveyController extends Controller
      */
     public function destroy(Survey $survey)
     {
-            $survey->query()->delete();
+        try {
+
+            DB::transaction(function () use ($survey) {
+
+                $survey->delete();
+
+            });
 
             return redirect()
                 ->route('surveys.index')
                 ->with('success', 'Survey deleted successfully.');
-            }
+
+        } catch (\Throwable $e) {
+
+            report($e);
+
+            return back()
+                ->with('error', 'Unable to delete survey.');
+        }
+    }
 }
