@@ -22,6 +22,7 @@ class SurveyController extends Controller
     public function index(Request $request)
     {
         $surveys = Survey::with('client')
+            ->withCount('responses')
             ->when($request->search, function ($query) use ($request) {
                 $query->where('title', 'like', '%' . $request->search . '%');})
             ->when($request->status, function ($query) use ($request) {

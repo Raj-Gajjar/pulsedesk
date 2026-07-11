@@ -86,6 +86,8 @@
 
                     <th>Created</th>
 
+                    <th>Public Link</th>
+
                     <th width="180">Action</th>
 
                 </tr>
@@ -105,8 +107,10 @@
                         <td>{{ $survey->client->company_name }}</td>
 
                         <td>
-                            <span class="badge bg-info">
-                                0
+                            <span class="badge {{ $survey->responses_count ? 'bg-success' : 'bg-secondary' }}">
+
+                                {{ $survey->responses_count }}
+
                             </span>
                         </td>
 
@@ -128,6 +132,16 @@
                         </td>
 
                         <td>{{ $survey->created_at->format('d M Y') }}</td>
+
+                        <td>
+                            <a href="{{ route('public-surveys.show', $survey) }}"
+                                target="_blank"
+                                class="btn btn-sm btn-info">
+
+                                Open Survey
+
+                            </a>
+                        </td>
 
                         <td>
                             <div class="d-flex gap-2">

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Login')
+@section('title', 'Register')
 
 @section('content')
 
@@ -10,22 +10,51 @@
 
         <div class="text-center mb-4">
 
-            <h3>Login</h3>
+            <h3>Create Account</h3>
 
             <p class="text-muted">
-                Sign in to your PulseDesk account
+                Register to access PulseDesk
             </p>
 
         </div>
 
-        <form method="POST" action="{{ route('login.authenticate') }}">
+        <form method="POST" action="{{ route('register.store') }}">
 
             @csrf
 
             <div class="mb-3">
 
                 <label class="form-label">
+
+                    Name
+
+                </label>
+
+                <input
+                    type="text"
+                    name="name"
+                    class="form-control @error('name') is-invalid @enderror"
+                    value="{{ old('name') }}"
+                    placeholder="Enter your name">
+
+                @error('name')
+
+                    <div class="invalid-feedback">
+
+                        {{ $message }}
+
+                    </div>
+
+                @enderror
+
+            </div>
+
+            <div class="mb-3">
+
+                <label class="form-label">
+
                     Email
+
                 </label>
 
                 <input
@@ -33,7 +62,7 @@
                     name="email"
                     class="form-control @error('email') is-invalid @enderror"
                     value="{{ old('email') }}"
-                    placeholder="Enter email">
+                    placeholder="Enter your email">
 
                 @error('email')
 
@@ -50,7 +79,9 @@
             <div class="mb-3">
 
                 <label class="form-label">
+
                     Password
+
                 </label>
 
                 <input
@@ -71,23 +102,19 @@
 
             </div>
 
-            <div class="mb-3 form-check">
+            <div class="mb-3">
 
-                <input
-                    type="checkbox"
-                    class="form-check-input"
-                    id="remember"
-                    name="remember"
-                    value="1"
-                    {{ old('remember') ? 'checked' : '' }}>
+                <label class="form-label">
 
-                <label
-                    class="form-check-label"
-                    for="remember">
-
-                    Remember Me
+                    Confirm Password
 
                 </label>
+
+                <input
+                    type="password"
+                    name="password_confirmation"
+                    class="form-control"
+                    placeholder="Confirm password">
 
             </div>
 
@@ -95,7 +122,7 @@
                 type="submit"
                 class="btn btn-primary w-100">
 
-                Login
+                Register
 
             </button>
 
@@ -105,11 +132,11 @@
 
         <div class="text-center">
 
-            Don't have an account?
+            Already have an account?
 
-            <a href="{{ route('register') }}">
+            <a href="{{ route('login') }}">
 
-                Register
+                Login
 
             </a>
 

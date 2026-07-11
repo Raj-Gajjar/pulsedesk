@@ -9,24 +9,14 @@
     <h2>Clients</h2>
 
     <a href="{{ route('clients.create') }}" class="btn btn-primary">
-        + Add Client
+        + New Client
     </a>
 
 </div>
 
-<div class="card">
+<div class="card shadow-sm">
 
     <div class="card-body">
-        @if (session('success'))
-            <div class="alert alert-success alert-dismissible fade show">
-                {{ session('success') }}
-                <button
-                    class="btn-close"
-                    data-bs-dismiss="alert">
-                </button>
-
-            </div>
-        @endif
 
         <table class="table table-hover align-middle">
 
@@ -34,12 +24,21 @@
 
                 <tr>
 
-                    <th>ID</th>
+                    <th>#</th>
+
+                    <th>Logo</th>
+
                     <th>Company</th>
+
                     <th>Contact Person</th>
+
                     <th>Email</th>
+
+                    <th>Phone</th>
+
                     <th>Status</th>
-                    <th>Action</th>
+
+                    <th width="180">Action</th>
 
                 </tr>
 
@@ -47,73 +46,132 @@
 
             <tbody>
 
-                @if (!empty($clients))
-                
-                    @foreach ($clients as $client)
-                        <tr>
-                            <td>{{ $client['id'] }} </td>
-                            <td>{{ $client['company_name'] }} </td>
-                            <td>{{ $client['contact_person'] }} </td>
-                            <td>{{ $client['email'] }} </td>
-                            <td>
-                                {{ $client['status'] == '1' ? 'Active' : 'Inactive' }} 
-                            </td>
-                            <td>
-                                <div class="d-flex gap-2">
-                                    <a class="btn btn-sm btn-warning" href="{{ route('clients.edit', $client) }}">
-                                        Edit
-                                    </a>
+                @forelse($clients as $client)
 
-                                    <form action="{{ route('clients.destroy', $client) }}" method="GET">
-                                        @csrf
-                                        @method('delete')
-
-                                        <button class="btn btn-sm btn-danger">
-                                            Delete
-                                        </button>
-                                    </form>
-                                </div>
-                            </td>
-                        </tr>
-                    @endforeach
-
-                @else
                     <tr>
 
-                        <td colspan="6" class="text-center py-5">
+                        <td>{{ $loop->iteration }}</td>
 
-                            <img src="{{ asset('images/empty.svg') }}"
-                                width="180">
+                        <td>
 
-                            <h5 class="mt-3">
+                            @if($client->logo)
 
-                                No Clients Yet
+                                <img
+                                    src="{{ asset('storage/' . $client->logo) }}"
+                                    alt="{{ $client->company_name }}"
+                                    width="45"
+                                    height="45"
+                                    class="rounded-circle border"
+                                    style="object-fit: cover;">
+
+                            @else
+
+                                <span class="text-muted">
+
+                                    No Logo
+
+                                </span>
+
+                            @endif
+
+                        </td>
+
+                        <td>{{ $client->company_name }}</td>
+
+                        <td>{{ $client->contact_person }}</td>
+
+                        <td>{{ $client->email }}</td>
+
+                        <td>{{ $client->phone }}</td>
+
+                        <td>
+
+                            <span class="badge {{ $client->status ? 'bg-success' : 'bg-danger' }}">
+
+                                {{ $client->status ? 'Active' : 'Inactive' }}
+
+                            </span>
+
+                        </td>
+
+                        <td>
+
+                            <div class="d-flex gap-2">
+
+                                <a
+                                    href="{{ route('clients.edit', $client) }}"
+                                    class="btn btn-sm btn-warning">
+
+                                    Edit
+
+                                </a>
+
+                                <form
+                                    action="{{ route('clients.destroy', $client) }}"
+                                    method="POST"
+                                    class="d-inline">
+
+                                    @csrf
+                                    @method('DELETE')
+
+                                    <button
+                                        type="submit"
+                                        class="btn btn-sm btn-danger"
+                                        onclick="return confirm('Are you sure you want to delete this client?')">
+
+                                        Delete
+
+                                    </button>
+
+                                </form>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+                @empty
+
+                    <tr>
+
+                        <td colspan="8" class="text-center py-5">
+
+                            <h5 class="mb-2">
+
+                                No Clients Found
 
                             </h5>
 
-                            <p class="text-muted">
+                            <p class="text-muted mb-3">
 
-                                Start by adding your first client.
+                                Create your first client to get started.
 
                             </p>
 
-                            <a href="{{ route('clients.create') }}"
-                            class="btn btn-primary">
+                            <a
+                                href="{{ route('clients.create') }}"
+                                class="btn btn-primary">
 
-                                Add Client
+                                + Create Client
 
                             </a>
 
                         </td>
 
                     </tr>
-                @endif
 
-                
+                @endforelse
 
             </tbody>
 
         </table>
+
+        <div class="mt-3">
+
+            {{ $clients->links() }}
+
+        </div>
 
     </div>
 

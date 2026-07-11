@@ -6,6 +6,11 @@ use App\Models\Client;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreClientRequest;
+use App\Http\Requests\UpdateClientRequest;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
+
+use function Pest\Laravel\delete;
 
 class ClientController extends Controller
 {
@@ -14,7 +19,10 @@ class ClientController extends Controller
      */
     public function index()
     {
-        $clients = Client::all();
+        $clients = Client::query()
+            ->latest()
+            ->paginate(5);
+
         return view('admin.clients.index', compact('clients'));
     }
 
@@ -31,19 +39,52 @@ class ClientController extends Controller
      */
     public function store(StoreClientRequest $request)
     {
-        $data = $request->validated();
 
-        if ($request->hasFile('logo')){
+        try {
 
-            $data['logo'] = $request->file('logo')
-                                    ->store('clients', 'public');
-        }
+            DB::transaction(function () use($request) {
 
-        Client::create($data);
+                $logo = null;
 
-        return redirect()
+                if($request->hasFile('logo')){
+                    $logo = $request->file('logo')
+                        ->store('clients', 'public');
+                }
+
+                Client::create([
+                    'company_name'   => $request->company_name,
+
+                    'contact_person' => $request->contact_person,
+
+                    'email'          => $request->email,
+
+                    'phone'          => $request->phone,
+
+                    'logo'           => $logo,
+
+                    'website'        => $request->website,
+
+                    'address'        => $request->address,
+
+                    'status'         => $request->status,
+                ]);
+
+            });
+
+            return redirect()
                 ->route('clients.index')
-                ->with('success', 'Client Created Successfully');
+                ->with('success', 'Client created successfully.');
+
+
+         } catch (\Throwable $e) {
+
+            report($e);
+
+            return back()
+                ->withInput()
+                ->with('error', 'Something went wrong while creating the client.');
+
+        }
 
     }
 
@@ -66,21 +107,60 @@ class ClientController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(StoreClientRequest $request, Client $client)
+    public function update(UpdateClientRequest $request, Client $client)
     {
-        $data = $request->validated();
+        
+        try{
 
-        if ($request->hasFile('logo')){
+            DB::transaction(function () use($request, $client){
 
-            $data['logo'] = $request->file('logo')
-                                    ->store('clients', 'public');
-        }
+                $logo = $client->logo;
 
-        $client->update();
+                if ($request->hasFile('logo')){
+                    
+                    if ($client->logo && storage::disk('public')->exists($client->logo)){
 
-        return redirect()
+                        storage::disk('public')->delete($client->logo);
+
+                    }
+
+                    $logo = $request->file('logo')
+                        ->store('clients', 'public');
+                }
+
+                $client->update([
+
+                    'company_name'   => $request->company_name,
+
+                    'contact_person' => $request->contact_person,
+
+                    'email'          => $request->email,
+
+                    'phone'          => $request->phone,
+
+                    'logo'           => $logo,
+
+                    'website'        => $request->website,
+
+                    'address'        => $request->address,
+
+                    'status'         => $request->status,
+                ]);
+
+            });
+
+            return redirect()
                 ->route('clients.index')
-                ->with('success', 'Client Updated Successfully');
+                ->with('success', 'Client updated successfully.');
+
+        }catch (\Throwable $e){
+
+            report($e);
+
+            return back()
+                ->withInput()
+                ->with('error', 'Something went wrong while updating the client.');
+        }
 
     }
 
@@ -89,6 +169,31 @@ class ClientController extends Controller
      */
     public function destroy(Client $client)
     {
-        //
+        try{
+
+            DB::transaction(function () use($client) {
+
+                if ($client->logo && storage::disk('public')->exists($client->logo)){
+
+                    storage::disk('public')->delete($client->logo);
+
+                }
+
+                $client->delete();
+
+            });
+
+            return redirect()
+                ->route('clients.index')
+                ->with('success', 'Client Deleted successfully.');
+
+        }catch (\Throwable $e){
+
+            report($e);
+
+            return back()
+                ->with('error', 'Something went wrong while deleting the client.');
+
+        }
     }
 }

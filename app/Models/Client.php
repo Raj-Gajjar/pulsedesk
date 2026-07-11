@@ -11,7 +11,6 @@ class Client extends Model
         'contact_person',
         'email',
         'phone',
-        'email',
         'logo',
         'website',
         'address',

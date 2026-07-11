@@ -7,7 +7,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 use Override;
 
-class StoreClientRequest extends FormRequest
+class UpdateClientRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -36,7 +36,7 @@ class StoreClientRequest extends FormRequest
                 Rule::unique('clients', 'email')->ignore($this->client),
             ],
 
-            'phone' => [ 'required', 'max:20'],
+            'phone' => ['required', 'max:20'],
 
             'website' => ['nullable', 'url'],
 

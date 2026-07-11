@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Response;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ResponseController extends Controller
 {
@@ -13,7 +14,12 @@ class ResponseController extends Controller
      */
     public function index()
     {
-        //
+            $responses = Response::query()
+                ->with(['survey',])
+                ->latest()
+                ->paginate(5);
+
+            return view('admin.responses.index', compact('responses'));
     }
 
     /**
@@ -37,7 +43,12 @@ class ResponseController extends Controller
      */
     public function show(Response $response)
     {
-        //
+        $response->load([
+            'survey',
+            'answers.question',
+        ]);
+
+        return view('admin.responses.show', compact('response'));
     }
 
     /**
@@ -61,6 +72,27 @@ class ResponseController extends Controller
      */
     public function destroy(Response $response)
     {
-        //
+        DB::beginTransaction();
+
+        try {
+
+            $response->delete();
+
+            DB::commit();
+
+            return redirect()
+                ->route('responses.index')
+                ->with('success', 'Response deleted successfully.');
+
+        } catch (\Throwable $e) {
+
+            DB::rollBack();
+
+            report($e);
+
+            return back()
+                ->with('error', 'Unable to delete response.');
+        }
     }
+
 }
