@@ -4,69 +4,237 @@
 
 @section('content')
 
-<div class="container-fluid">
+<div class="mb-4">
 
-    <div class="row">
+    <h2 class="mb-1">
 
-        <div class="col-md-3 mb-4">
+        Dashboard
 
-            <div class="card shadow-sm">
+    </h2>
 
-                <div class="card-body">
+    <p class="text-muted mb-0">
 
-                    <h6>Total Surveys</h6>
+        Welcome back, {{ auth()->user()->name }} 👋
 
-                    <h2>0</h2>
+    </p>
 
-                </div>
+</div>
 
-            </div>
+<div class="row g-4">
 
-        </div>
+    <div class="col-md-6 col-xl-3">
 
-        <div class="col-md-3 mb-4">
+        <div class="card border-0 shadow-sm">
 
-            <div class="card shadow-sm">
+            <div class="card-body">
 
-                <div class="card-body">
+                <h6 class="text-muted">
 
-                    <h6>Total Responses</h6>
+                    Total Clients
 
-                    <h2>0</h2>
+                </h6>
 
-                </div>
+                <h2 class="fw-bold">
 
-            </div>
+                    {{ $stats['clients'] }}
 
-        </div>
-
-        <div class="col-md-3 mb-4">
-
-            <div class="card shadow-sm">
-
-                <div class="card-body">
-
-                    <h6>Clients</h6>
-
-                    <h2>0</h2>
-
-                </div>
+                </h2>
 
             </div>
 
         </div>
 
-        <div class="col-md-3 mb-4">
+    </div>
 
-            <div class="card shadow-sm">
+    <div class="col-md-6 col-xl-3">
 
-                <div class="card-body">
+        <div class="card border-0 shadow-sm">
 
-                    <h6>Average Rating</h6>
+            <div class="card-body">
 
-                    <h2>0.0</h2>
+                <h6 class="text-muted">
 
-                </div>
+                    Total Surveys
+
+                </h6>
+
+                <h2 class="fw-bold">
+
+                    {{ $stats['surveys'] }}
+
+                </h2>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-md-6 col-xl-3">
+
+        <div class="card border-0 shadow-sm">
+
+            <div class="card-body">
+
+                <h6 class="text-muted">
+
+                    Published Surveys
+
+                </h6>
+
+                <h2 class="fw-bold text-success">
+
+                    {{ $stats['published'] }}
+
+                </h2>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-md-6 col-xl-3">
+
+        <div class="card border-0 shadow-sm">
+
+            <div class="card-body">
+
+                <h6 class="text-muted">
+
+                    Total Responses
+
+                </h6>
+
+                <h2 class="fw-bold text-primary">
+
+                    {{ $stats['responses'] }}
+
+                </h2>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="row mt-4">
+
+    <div class="col-lg-6">
+
+        <div class="card border-0 shadow-sm">
+
+            <div class="card-header bg-white">
+
+                <strong>
+
+                    Survey Status
+
+                </strong>
+
+            </div>
+
+            <div class="card-body">
+
+                <table class="table table-borderless mb-0">
+
+                    <tr>
+
+                        <td>Published</td>
+
+                        <td class="text-end">
+
+                            <span class="badge bg-success">
+
+                                {{ $stats['published'] }}
+
+                            </span>
+
+                        </td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>Draft</td>
+
+                        <td class="text-end">
+
+                            <span class="badge bg-secondary">
+
+                                {{ $stats['draft'] }}
+
+                            </span>
+
+                        </td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>Closed</td>
+
+                        <td class="text-end">
+
+                            <span class="badge bg-danger">
+
+                                {{ $stats['closed'] }}
+
+                            </span>
+
+                        </td>
+
+                    </tr>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-lg-6">
+
+        <div class="card border-0 shadow-sm">
+
+            <div class="card-header bg-white">
+
+                <strong>
+
+                    Quick Actions
+
+                </strong>
+
+            </div>
+
+            <div class="card-body d-grid gap-2">
+
+                <a
+                    href="{{ route('clients.create') }}"
+                    class="btn btn-outline-primary">
+
+                    + New Client
+
+                </a>
+
+                <a
+                    href="{{ route('surveys.create') }}"
+                    class="btn btn-outline-success">
+
+                    + New Survey
+
+                </a>
+
+                <a
+                    href="{{ route('responses.index') }}"
+                    class="btn btn-outline-dark">
+
+                    View Responses
+
+                </a>
 
             </div>
 

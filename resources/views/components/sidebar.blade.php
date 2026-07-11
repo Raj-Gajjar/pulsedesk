@@ -1,4 +1,4 @@
-<div class="bg-dark text-white d-flex flex-column vh-100 shadow" style="width:260px;">
+<div class="bg-dark text-white d-flex flex-column h-100 shadow" style="width:260px;">
 
     <!-- Logo -->
     <div class="p-4 border-bottom border-secondary">
