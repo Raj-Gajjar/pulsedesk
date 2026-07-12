@@ -13,9 +13,27 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Question;
 use App\Models\QuestionOption;
 use App\Models\User;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 
-class SurveyController extends Controller
+class SurveyController extends Controller implements HasMiddleware
 {
+
+    public static function middleware(): array
+    {
+        return [
+
+            new Middleware('permission:surveys.view', only: ['index']),
+
+            new Middleware('permission:surveys.create', only: ['create', 'store']),
+
+            new Middleware('permission:surveys.edit', only: ['edit', 'update']),
+
+            new Middleware('permission:surveys.delete', only: ['destroy']),
+
+        ];
+    }
+
     /**
      * Display a listing of the resource.
      */

@@ -9,11 +9,29 @@ use App\Http\Requests\StoreClientRequest;
 use App\Http\Requests\UpdateClientRequest;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 
 use function Pest\Laravel\delete;
 
-class ClientController extends Controller
+class ClientController extends Controller implements HasMiddleware
 {
+
+    public static function middleware(): array
+    {
+        return [
+
+            new Middleware('permission:clients.view', only: ['index']),
+
+            new Middleware('permission:clients.create', only: ['create', 'store']),
+
+            new Middleware('permission:clients.edit', only: ['edit', 'update']),
+
+            new Middleware('permission:clients.delete', only: ['destroy']),
+
+        ];
+    }
+
     /**
      * Display a listing of the resource.
      */

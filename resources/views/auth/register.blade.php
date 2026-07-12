@@ -10,10 +10,24 @@
 
         <div class="text-center mb-4">
 
-            <h3>Create Account</h3>
+            <div class="d-flex align-items-center justify-content-center">
+
+                @if($appSettings->logo)
+                    <img
+                        src="{{ asset('storage/' . $appSettings->logo) }}"
+                        alt="Logo"
+                        width="45"
+                        height="45"
+                        class="me-3 rounded">
+                @endif
+
+                 <h3 class="mb-0">Create Account</h3>
+
+            </div>
+            
 
             <p class="text-muted">
-                Register to access PulseDesk
+                Register to access {{ $appSettings->app_name }}
             </p>
 
         </div>

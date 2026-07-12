@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Client;
 use App\Models\Response;
 use App\Models\Survey;
+use App\Models\User;
 
 class DashboardController extends Controller
 {

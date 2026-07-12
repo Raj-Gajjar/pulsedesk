@@ -6,9 +6,23 @@ use App\Models\Response;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 
-class ResponseController extends Controller
+class ResponseController extends Controller implements HasMiddleware
 {
+
+    public static function middleware(): array
+    {
+        return [
+
+            new Middleware('permission:responses.view', only: ['index', 'show']),
+
+            new Middleware('permission:responses.delete', only: ['destroy']),
+
+        ];
+    }
+
     /**
      * Display a listing of the resource.
      */

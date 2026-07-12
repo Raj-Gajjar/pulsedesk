@@ -8,12 +8,27 @@
 
     <div class="card-body p-4">
 
-        <div class="text-center mb-4">
+        <div class="text-center mb-4 mt-4">
 
-            <h3>Login</h3>
+            <div class="d-flex align-items-center justify-content-center">
+
+                @if($appSettings->logo)
+                    <img
+                        src="{{ asset('storage/' . $appSettings->logo) }}"
+                        alt="Logo"
+                        width="45"
+                        height="45"
+                        class="me-3 rounded">
+                @endif
+
+                 <h3 class="mb-0">Login</h3>
+
+            </div>
+
+            {{-- <h3>Login</h3> --}}
 
             <p class="text-muted">
-                Sign in to your PulseDesk account
+                Sign in to your {{ $appSettings->app_name }} account
             </p>
 
         </div>

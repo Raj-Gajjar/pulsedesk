@@ -23,5 +23,9 @@ class Question extends Model
             ->orderBy('sort_order');
     }
 
+    public function answers()
+    {
+        return $this->hasMany(ResponseAnswer::class);
+}
     
 }
