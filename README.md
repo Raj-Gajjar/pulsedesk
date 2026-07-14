@@ -1,6 +1,6 @@
 <div align="center">
 
-![PulseDesk Login](PulseDesk-login.png)
+![PulseDesk](pulsedesk.png)
 
 # 🚀 PulseDesk
 
