@@ -182,18 +182,7 @@ PulseDesk provides a scalable architecture that can easily be extended with feat
 
 # 📸 Application Preview
 
-> Screenshots will be added soon.
-
-- Login
-- Dashboard
-- Clients
-- Surveys
-- Public Survey
-- Responses
-- Reports
-- Users
-- Roles
-- Settings
+![PulseDesk](pulsedesk.png)
 
 ---
 
