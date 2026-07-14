@@ -1,109 +1,124 @@
-@csrf
 
-<div class="card shadow-sm">
 
-    <div class="card-body">
+<div class="mb-4">
 
-        <div class="mb-4">
+    <label class="form-label fw-semibold">
 
-            <label class="form-label">
+        Role Name <span class="text-danger">*</span>
 
-                Role Name
+    </label>
 
-            </label>
+    <input
+        type="text"
+        name="name"
+        class="form-control @error('name') is-invalid @enderror"
+        value="{{ old('name', $role->name ?? '') }}"
+        placeholder="Enter role name">
 
-            <input
-                type="text"
-                name="name"
-                class="form-control @error('name') is-invalid @enderror"
-                value="{{ old('name', $role->name ?? '') }}">
+    <small class="text-muted">
 
-                <small class="text-muted">
-                    Examples: Super Admin, Admin, Manager, HR, Support, Staff
-                </small>
+        Examples: Super Admin, Admin, Manager, HR, Support, Staff
 
-            @error('name')
+    </small>
 
-                <div class="invalid-feedback">
+    @error('name')
 
-                    {{ $message }}
+        <div class="invalid-feedback">
 
-                </div>
-
-            @enderror
+            {{ $message }}
 
         </div>
 
-        <h5 class="mb-3">
+    @enderror
 
-            Permissions
+</div>
 
-        </h5>
+<div class="mb-3">
 
-        <div class="row">
+    <h5 class="mb-1">
 
-            @foreach($permissions as $permission)
+        Permissions
 
-                <div class="col-md-4 mb-2">
+    </h5>
 
-                    <div class="form-check">
+    <p class="text-muted mb-0">
 
-                        <input
-                            type="checkbox"
-                            class="form-check-input"
-                            name="permissions[]"
-                            value="{{ $permission->name }}"
+        Select the permissions this role should have.
 
-                            {{ in_array(
-                                $permission->name,
-                                old(
-                                    'permissions',
-                                    isset($role)
-                                        ? $role->permissions->pluck('name')->toArray()
-                                        : []
-                                )
-                            ) ? 'checked' : '' }}>
+    </p>
 
-                        <label class="form-check-label">
+</div>
 
-                            {{ $permission->name }}
+<div class="row">
 
-                        </label>
+    @foreach($permissions as $permission)
 
-                    </div>
+        <div class="col-md-4 mb-2">
 
-                </div>
+            <div class="form-check border rounded-3 p-3 h-100 d-flex align-items-center" style="cursor: pointer">
 
-            @endforeach
+                <input
+                    type="checkbox"
+                    class="form-check-input me-2 mt-0"
+                    id="permission-{{ $permission->id }}"
+                    name="permissions[]"
+                    value="{{ $permission->name }}"
+                    {{ in_array(
+                        $permission->name,
+                        old(
+                            'permissions',
+                            isset($role)
+                                ? $role->permissions->pluck('name')->toArray()
+                                : []
+                        )
+                    ) ? 'checked' : '' }}>
 
-        </div>
+                <label
+                    class="form-check-label fw-semibold mb-0"
+                    for="permission-{{ $permission->id }}" style="cursor: pointer">
 
-        @error('permissions')
+                    {{ $permission->name }}
 
-            <div class="text-danger mt-2">
-
-                {{ $message }}
+                </label>
 
             </div>
 
-        @enderror
+        </div>
 
-        <hr>
+    @endforeach
 
-        <button class="btn btn-primary">
+</div>
 
-            {{ isset($role) ? 'Update Role' : 'Create Role' }}
+@error('permissions')
 
-        </button>
+    <div class="invalid-feedback d-block mt-2">
 
-        <a
-            href="{{ route('roles.index') }}"
-            class="btn btn-secondary">
-
-            Cancel
-
-        </a>
+        {{ $message }}
 
     </div>
 
+@enderror
+
+<hr>
+
+<div class="d-flex justify-content-end gap-2">
+
+    <a
+        href="{{ route('roles.index') }}"
+        class="btn btn-light">
+
+        Cancel
+
+    </a>
+
+    <button
+        type="submit"
+        class="btn btn-primary">
+        <i class="bi bi-check-lg me-2"></i>
+
+        {{ isset($role) ? 'Update Role' : 'Create Role' }}
+
+    </button>
+
 </div>
+

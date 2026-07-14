@@ -20,7 +20,7 @@ class UserController extends Controller implements HasMiddleware
     {
         return [
 
-            new Middleware('permission:users.view', only: ['index']),
+            new Middleware('permission:users.view', only: ['index', 'show']),
 
             new Middleware('permission:users.create', only: ['create', 'store']),
 

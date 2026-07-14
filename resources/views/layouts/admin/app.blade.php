@@ -1,37 +1,62 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
+
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    {{-- <title>@yield('title', '{{ $appSettings->app_name }}')</title> --}}
-    <title>{{ $appSettings->app_name }} - @yield('title')</title>
 
     @if($appSettings->favicon)
         <link rel="icon" type="image/png" href="{{ asset('storage/' . $appSettings->favicon) }}">
     @endif
 
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <title>
+
+        {{ $appSettings->app_name ?? config('app.name') }}
+
+        @hasSection('title')
+
+            | @yield('title')
+
+        @endif
+
+    </title>
+
+    @include('layouts.admin.partials.styles')
+
+    @stack('styles')
+
+    @vite([ 'resources/js/app.js'])
+
 </head>
 
 <body>
 
-<div class="d-flex">
+    <x-alerts />
 
-    @include('components.sidebar')
 
-    <div class="flex-grow-1">
+    <div class="admin-wrapper">
 
-        @include('components.topbar')
+        {{-- Sidebar --}}
+        @include('layouts.admin.partials.sidebar')
 
-        <main class="p-4">
-            @include('components.alerts')
-            @yield('content')
-        </main>
+        {{-- Main Content --}}
+        <div class="main-wrapper">
+
+            {{-- Navbar --}}
+            @include('layouts.admin.partials.navbar')
+
+            <main class="content-wrapper">
+                
+                @yield('content')
+
+            </main>
+
+        </div>
 
     </div>
 
-</div>
-
 </body>
+
 </html>

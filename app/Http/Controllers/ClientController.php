@@ -21,7 +21,7 @@ class ClientController extends Controller implements HasMiddleware
     {
         return [
 
-            new Middleware('permission:clients.view', only: ['index']),
+            new Middleware('permission:clients.view', only: ['index', 'show']),
 
             new Middleware('permission:clients.create', only: ['create', 'store']),
 

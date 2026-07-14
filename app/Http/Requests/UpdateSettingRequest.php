@@ -35,7 +35,7 @@ class UpdateSettingRequest extends FormRequest
                 'max:255',
             ],
 
-                        'timezone' => [
+            'timezone' => [
                 'required',
                 'string',
                 'max:255',
@@ -45,10 +45,10 @@ class UpdateSettingRequest extends FormRequest
                 'nullable',
                 'image',
                 'mimes:jpg,jpeg,png,svg',
-                'max:2048',
+                'max:5048',
             ],
 
-                        'favicon' => [
+            'favicon' => [
                 'nullable',
                 'image',
                 'mimes:ico,png',

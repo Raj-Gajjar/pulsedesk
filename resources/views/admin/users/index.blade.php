@@ -4,48 +4,81 @@
 
 @section('content')
 
-<div class="d-flex justify-content-between align-items-center mb-4">
 
-    <h2>Users</h2>
-
-    <a href="{{ route('users.create') }}" class="btn btn-primary">
-        + New User
-    </a>
-
-</div>
-
-<div class="card shadow-sm">
+<div class="card border-0 shadow-sm mb-4">
 
     <div class="card-body">
 
-        <form method="GET" class="row mb-4">
+        <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4">
 
-            <div class="col-md-8">
+            <div>
 
-                <input
-                    type="text"
-                    name="search"
-                    value="{{ request('search') }}"
-                    class="form-control"
-                    placeholder="Search by name or email">
+                <h3 class="fw-bold mb-1">
+
+                    Users
+
+                </h3>
+
+                <p class="text-muted mb-0">
+
+                    Manage system users and their roles.
+
+                </p>
 
             </div>
 
-            <div class="col-md-2">
+            <a
+                href="{{ route('users.create') }}"
+                class="btn btn-primary">
 
-                <select name="status" class="form-select">
+                <i class="bi bi-plus-lg"></i>
+
+                Create User
+
+            </a>
+
+        </div>
+
+        <form method="GET" class="row g-3">
+
+            <div class="col-lg-7">
+
+                <div class="input-group">
+
+                    <span class="input-group-text bg-white border-end-0">
+
+                        <i class="bi bi-search"></i>
+
+                    </span>
+
+                    <input
+                        type="text"
+                        name="search"
+                        value="{{ request('search') }}"
+                        class="form-control border-start-0"
+                        placeholder="Search users...">
+
+                </div>
+
+            </div>
+
+            <div class="col-lg-3">
+
+                <select
+                    name="status"
+                    class="form-select">
 
                     <option value="">All Status</option>
 
                     <option value="1"
-                        {{ request('status') === '1' ? 'selected' : '' }}>
+                        @selected(request('status') === '1')>
 
                         Active
 
                     </option>
 
                     <option value="0"
-                        {{ request('status') === '0' ? 'selected' : '' }}>
+                        @selected(request('status') === '0')>
 
                         Inactive
 
@@ -55,9 +88,9 @@
 
             </div>
 
-            <div class="col-md-2">
+            <div class="col-lg-2">
 
-                <button class="btn btn-primary w-100">
+                <button class="btn btn-primary btn-sm w-100">
 
                     Search
 
@@ -66,6 +99,15 @@
             </div>
 
         </form>
+
+    </div>
+
+</div>
+
+
+<x-admin.table
+    title="All Users"
+    subtitle="Manage every user in PulseDesk">
 
         <table class="table table-hover align-middle">
 
@@ -81,7 +123,7 @@
 
                     <th>Status</th>
 
-                    <td> Role </td>
+                    <th>Role</th>
 
                     <th>Created</th>
 
@@ -105,11 +147,15 @@
 
                         <td>
 
-                            {{ $user->name }}
+                            <div class="fw-semibold">
+
+                                {{ $user->name }}
+
+                            </div>
 
                         </td>
 
-                        <td>
+                        <td class="text-muted">
 
                             {{ $user->email }}
 
@@ -157,9 +203,9 @@
 
                                 <a
                                     href="{{ route('users.edit', $user) }}"
-                                    class="btn btn-sm btn-warning">
+                                    class="btn btn-sm btn-outline-primary">
 
-                                    Edit
+                                    <i class="bi bi-pencil"></i>
 
                                 </a>
 
@@ -173,11 +219,11 @@
 
                                     <button
                                         type="submit"
-                                        class="btn btn-sm btn-danger"
+                                        class="btn btn-sm btn-outline-danger"
                                         onclick="return confirm('Are you sure you want to delete this user?')"
                                         {{ auth()->id() == $user->id ? 'disabled' : '' }}>
 
-                                        Delete
+                                        <i class="bi bi-trash"></i>
 
                                     </button>
 
@@ -193,7 +239,7 @@
 
                     <tr>
 
-                        <td colspan="6" class="text-center py-5">
+                        <td colspan="7" class="text-center py-5">
 
                             <h5 class="mb-2">
 
@@ -211,7 +257,9 @@
                                 href="{{ route('users.create') }}"
                                 class="btn btn-primary">
 
-                                + Create User
+                                <i class="bi bi-plus-lg"></i>
+
+                                Create User
 
                             </a>
 
@@ -225,14 +273,12 @@
 
         </table>
 
-        <div class="mt-3">
+        <div class="px-4 py-3">
 
             {{ $users->links() }}
 
         </div>
 
-    </div>
-
-</div>
+</x-admin.table>
 
 @endsection

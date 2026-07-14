@@ -1,3 +1,7 @@
-import 'bootstrap';
-import './modules/survey-builder';
+import './bootstrap';
 
+import * as bootstrap from 'bootstrap';
+window.bootstrap = bootstrap;
+
+import './dashboard';
+import './survey-builder';

@@ -23,7 +23,7 @@ class SurveyController extends Controller implements HasMiddleware
     {
         return [
 
-            new Middleware('permission:surveys.view', only: ['index']),
+            new Middleware('permission:surveys.view', only: ['index', 'show']),
 
             new Middleware('permission:surveys.create', only: ['create', 'store']),
 

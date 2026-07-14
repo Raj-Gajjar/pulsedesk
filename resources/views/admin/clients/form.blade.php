@@ -3,7 +3,7 @@
     <!-- Company Name -->
     <div class="col-md-6 mb-3">
 
-        <label class="form-label">
+        <label class="form-label fw-semibold">
             Company Name <span class="text-danger">*</span>
         </label>
 
@@ -25,7 +25,7 @@
     <!-- Contact Person -->
     <div class="col-md-6 mb-3">
 
-        <label class="form-label">
+        <label class="form-label fw-semibold">
             Contact Person <span class="text-danger">*</span>
         </label>
 
@@ -47,7 +47,7 @@
     <!-- Email -->
     <div class="col-md-6 mb-3">
 
-        <label class="form-label">
+        <label class="form-label fw-semibold">
             Email <span class="text-danger">*</span>
         </label>
 
@@ -69,7 +69,7 @@
     <!-- Phone -->
     <div class="col-md-6 mb-3">
 
-        <label class="form-label">
+        <label class="form-label fw-semibold">
             Phone <span class="text-danger">*</span>
         </label>
 
@@ -91,7 +91,7 @@
     <!-- Website -->
     <div class="col-md-6 mb-3">
 
-        <label class="form-label">
+        <label class="form-label fw-semibold">
             Website
         </label>
 
@@ -113,7 +113,7 @@
     <!-- Status -->
     <div class="col-md-6 mb-3">
 
-        <label class="form-label">
+        <label class="form-label fw-semibold">
             Status <span class="text-danger">*</span>
         </label>
 
@@ -144,7 +144,7 @@
     <!-- Address -->
     <div class="col-12 mb-3">
 
-        <label class="form-label">
+        <label class="form-label fw-semibold">
             Address
         </label>
 
@@ -165,7 +165,7 @@
     <!-- Logo -->
     <div class="col-md-6 mb-3">
 
-        <label class="form-label">
+        <label class="form-label fw-semibold">
             Company Logo
         </label>
 
@@ -187,7 +187,7 @@
 
         <div class="col-md-6 mb-3">
 
-            <label class="form-label">
+            <label class="form-label fw-semibold">
                 Current Logo
             </label>
 
@@ -196,8 +196,8 @@
                 <img
                     src="{{ asset('storage/'.$client->logo) }}"
                     alt="{{ $client->company_name }}"
-                    class="img-thumbnail"
-                    style="max-width: 150px;">
+                    class="rounded-3 border shadow-sm"
+                    style="width:150px;height:150px;object-fit:cover;">
 
             </div>
 
@@ -207,13 +207,13 @@
 
 </div>
 
-<hr>
+<div class="border-top my-4"></div>
 
 <div class="d-flex justify-content-end gap-2">
 
     <a
         href="{{ route('clients.index') }}"
-        class="btn btn-secondary">
+        class="btn btn-light border">
 
         Cancel
 
@@ -222,7 +222,7 @@
     <button
         type="submit"
         class="btn btn-primary">
-
+        <i class="bi bi-check-lg"></i>
         {{ isset($client) ? 'Update Client' : 'Create Client' }}
 
     </button>

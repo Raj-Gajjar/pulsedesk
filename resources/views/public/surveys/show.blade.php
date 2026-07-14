@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.admin.app')
 
 @section('title', $survey->title)
 
@@ -10,15 +10,30 @@
 
         <div class="col-lg-8">
 
-            <div class="card shadow">
+            <div class="card border-0 shadow-lg rounded-4">
 
-                <div class="card-body p-4">
+                <div class="card-body p-5">
 
-                    <h2 class="mb-2">
-                        {{ $survey->title }}
-                    </h2>
+                    <div class="text-center mb-5">
+
+                        <div class="display-6 mb-3">
+
+                            <i class="bi bi-clipboard-check text-primary"></i>
+
+                        </div>
+
+                        <h2 class="fw-bold">
+
+                            {{ $survey->title }}
+
+                        </h2>
+
+                    </div>
 
                     @if($survey->description)
+                        <label class="form-label fw-bold fs-5">
+                            Your Description
+                        </label>
 
                         <p class="text-muted mb-4">
                             {{ $survey->description }}
@@ -36,9 +51,19 @@
 
                         @foreach($survey->questions as $question)
 
-                            <div class="mb-4">
+                            <div class="mb-5">
 
-                                <label class="form-label fw-semibold">
+                                <div class="mb-2">
+
+                                    <small class="text-primary fw-semibold">
+
+                                        Question {{ $loop->iteration }}
+
+                                    </small>
+
+                                </div>
+
+                                <label class="form-label fw-bold fs-5">
 
                                     {{ $question->question }}
 
@@ -57,7 +82,8 @@
                                         type="text"
                                         class="form-control"
                                         name="answers[{{ $question->id }}]"
-                                        value="{{ old('answers.'.$question->id) }}">
+                                        value="{{ old('answers.'.$question->id) }}"
+                                        placeholder="Type your answer...">
 
                                 @endif
 
@@ -68,7 +94,8 @@
                                     <textarea
                                         class="form-control"
                                         rows="4"
-                                        name="answers[{{ $question->id }}]">{{ old('answers.'.$question->id) }}</textarea>
+                                        name="answers[{{ $question->id }}]"
+                                        placeholder="Write your answer...">{{ old('answers.'.$question->id) }}</textarea>
 
                                 @endif
 
@@ -78,14 +105,15 @@
 
                                     @foreach($question->options as $option)
 
-                                        <div class="form-check">
+                                        <div class="form-check mb-2">
 
                                             <input
                                                 class="form-check-input"
                                                 type="radio"
                                                 name="answers[{{ $question->id }}]"
                                                 value="{{ $option->option }}"
-                                                {{ old('answers.'.$question->id) == $option->option ? 'checked' : '' }}>
+                                                {{ old('answers.'.$question->id) == $option->option ? 'checked' : '' }}
+                                                >
 
                                             <label class="form-check-label">
 
@@ -105,7 +133,7 @@
 
                                     @foreach($question->options as $option)
 
-                                        <div class="form-check">
+                                        <div class="form-check mb-2">
 
                                             <input
                                                 class="form-check-input"
@@ -136,7 +164,7 @@
 
                                         <option value="">
 
-                                            Select
+                                            Choose an option
 
                                         </option>
 
@@ -166,17 +194,23 @@
 
                                         <option value="">
 
-                                            Select Rating
+                                            Select your rating
 
                                         </option>
 
                                         @for($i = 1; $i <= 5; $i++)
 
-                                            <option
+                                            {{-- <option
                                                 value="{{ $i }}"
                                                 {{ old('answers.'.$question->id) == $i ? 'selected' : '' }}>
 
                                                 {{ $i }}
+
+                                            </option> --}}
+
+                                            <option value="{{ $i }}">
+
+                                                {{ str_repeat('⭐',$i) }}
 
                                             </option>
 
@@ -202,13 +236,24 @@
 
                         <hr>
 
-                        <button
-                            type="submit"
-                            class="btn btn-primary">
+                        <div class="text-end">
 
-                            Submit Response
+                            <button
+                                type="submit"
+                                class="btn btn-primary w-100 px-5">
 
-                        </button>
+                                <i class="bi bi-send me-2"></i>
+
+                                Submit Response
+
+                            </button>
+
+                        </div>
+                        <p class="text-center text-muted mt-4 mb-0">
+
+                            Thank you for taking the time to complete this survey.
+
+                        </p>
 
                     </form>
 

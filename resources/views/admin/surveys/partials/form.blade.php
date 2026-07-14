@@ -1,15 +1,42 @@
    
     <div class="row">
 
+        <!-- Title -->
+
+        <div class="col-12 mb-3">
+
+            <label class="form-label fw-semibold">
+                Survey Title <span class="text-danger">*</span>
+            </label>
+
+            <input
+                type="text"
+                name="title"
+                class="form-control @error('title') is-invalid @enderror"
+                value="{{ old('title', $survey->title ?? '') }}"
+                placeholder="Customer Satisfaction Survey">
+
+            @error('title')
+
+            <div class="invalid-feedback">
+
+                {{ $message }}
+
+            </div>
+
+            @enderror
+
+        </div>
+
         <!-- Client -->
 
         <div class="col-md-6 mb-3">
 
-            <label class="form-label">
+            <label class="form-label fw-semibold">
                 Client <span class="text-danger">*</span>
             </label>
 
-            <select name="client_id" class="form-select">
+            <select name="client_id" class="form-control @error('title') is-invalid @enderror">
 
                 <option value="">Select Client</option>
 
@@ -30,9 +57,11 @@
 
             @error('client_id')
 
-                <small class="text-danger">
-                    {{ $message }}
-                </small>
+            <div class="invalid-feedback">
+
+                {{ $message }}
+
+            </div>
 
             @enderror
 
@@ -42,7 +71,7 @@
 
         <div class="col-md-6 mb-3">
 
-            <label class="form-label">
+            <label class="form-label fw-semibold">
                 Status
             </label>
 
@@ -67,52 +96,30 @@
 
         </div>
 
-        <!-- Title -->
-
-        <div class="col-12 mb-3">
-
-            <label class="form-label">
-                Survey Title <span class="text-danger">*</span>
-            </label>
-
-            <input
-                type="text"
-                name="title"
-                class="form-control"
-                value="{{ old('title', $survey->title ?? '') }}"
-                placeholder="Enter survey title">
-
-            @error('title')
-
-                <small class="text-danger">
-                    {{ $message }}
-                </small>
-
-            @enderror
-
-        </div>
 
         <!-- Description -->
 
         <div class="col-12 mb-3">
 
-            <label class="form-label">
+            <label class="form-label fw-semibold">
                 Description
             </label>
 
             <textarea
                 name="description"
-                rows="5"
-                class="form-control"
+                rows="3"
+                class="form-control @error('description') is-invalid @enderror"
                 placeholder="Enter survey description">{{ old('description', $survey->description ?? '') }}</textarea>
                 
                 @error('description')
 
-                <small class="text-danger">
-                    {{ $message }}
-                </small>
+                <div class="invalid-feedback">
 
-            @enderror
+                    {{ $message }}
+
+                </div>
+
+                @enderror
 
 
         </div>

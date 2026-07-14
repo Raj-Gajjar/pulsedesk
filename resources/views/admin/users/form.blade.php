@@ -1,14 +1,11 @@
-@csrf
 
-<div class="card shadow-sm">
 
-    <div class="card-body">
+    <div class="row">
+        <div class="col-md-6 mb-3">
 
-        <div class="mb-3">
+            <label class="form-label fw-semibold">
 
-            <label class="form-label">
-
-                Name
+                Name <span class="text-danger">*</span>
 
             </label>
 
@@ -16,25 +13,22 @@
                 type="text"
                 name="name"
                 class="form-control @error('name') is-invalid @enderror"
-                value="{{ old('name', $user->name ?? '') }}">
+                value="{{ old('name', $user->name ?? '') }}"
+                placeholder="Enter full name">
 
             @error('name')
-
                 <div class="invalid-feedback">
-
                     {{ $message }}
-
                 </div>
-
             @enderror
 
         </div>
 
-        <div class="mb-3">
+        <div class="col-md-6 mb-3">
 
-            <label class="form-label">
+            <label class="form-label fw-semibold">
 
-                Email
+                Email <span class="text-danger">*</span>
 
             </label>
 
@@ -42,23 +36,73 @@
                 type="email"
                 name="email"
                 class="form-control @error('email') is-invalid @enderror"
-                value="{{ old('email', $user->email ?? '') }}">
+                value="{{ old('email', $user->email ?? '') }}"
+                placeholder="Enter email address">
 
             @error('email')
-
                 <div class="invalid-feedback">
-
                     {{ $message }}
-
                 </div>
-
             @enderror
 
         </div>
+    </div>
 
-        <div class="mb-3">
+    <div class="row">
 
-            <label class="form-label">
+        <div class="col-md-6">
+
+                <label class="form-label fw-semibold">
+
+                    Password
+
+                </label>
+
+                <input
+                    type="password"
+                    name="password"
+                    class="form-control @error('password') is-invalid @enderror"
+                    placeholder="Enter password">
+
+                @error('password')
+
+                    <div class="invalid-feedback">
+
+                        {{ $message }}
+
+                    </div>
+
+                @enderror
+
+        </div>
+
+        <div class="col-md-6">
+
+            <div class="mb-3">
+
+               <label class="form-label fw-semibold">
+
+                    Confirm Password
+
+                </label>
+
+                <input
+                    type="password"
+                    name="password_confirmation"
+                    class="form-control"
+                    placeholder="Confirm password">
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="row">
+
+        <div class="col-md-6 mb-3">
+
+            <label class="form-label fw-semibold">
 
                 Role
 
@@ -105,61 +149,9 @@
 
         </div>
 
-        <div class="row">
+        <div class="col-md-6 mb-3">
 
-            <div class="col-md-6">
-
-                <div class="mb-3">
-
-                    <label class="form-label">
-
-                        Password
-
-                    </label>
-
-                    <input
-                        type="password"
-                        name="password"
-                        class="form-control @error('password') is-invalid @enderror">
-
-                    @error('password')
-
-                        <div class="invalid-feedback">
-
-                            {{ $message }}
-
-                        </div>
-
-                    @enderror
-
-                </div>
-
-            </div>
-
-            <div class="col-md-6">
-
-                <div class="mb-3">
-
-                    <label class="form-label">
-
-                        Confirm Password
-
-                    </label>
-
-                    <input
-                        type="password"
-                        name="password_confirmation"
-                        class="form-control">
-
-                </div>
-
-            </div>
-
-        </div>
-
-        <div class="mb-4">
-
-            <label class="form-label">
+            <label class="form-label fw-semibold">
 
                 Status
 
@@ -197,20 +189,27 @@
 
         </div>
 
-        <button class="btn btn-primary">
+    </div>
 
-            {{ isset($user) ? 'Update User' : 'Create User' }}
+    <hr>
 
-        </button>
+    <div class="d-flex justify-content-end gap-2">
 
         <a
             href="{{ route('users.index') }}"
-            class="btn btn-secondary">
+            class="btn btn-light">
 
             Cancel
 
         </a>
 
-    </div>
+        <button
+            type="submit"
+            class="btn btn-primary">
 
-</div>
+            <i class="bi bi-check-lg me-2"></i>
+            {{ isset($user) ? 'Update User' : 'Create User' }}
+
+        </button>
+
+    </div>

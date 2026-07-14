@@ -4,36 +4,66 @@
 
 @section('content')
 
-<div class="d-flex justify-content-between align-items-center mb-4">
-
-    <h2>Roles</h2>
-
-    <a href="{{ route('roles.create') }}" class="btn btn-primary">
-        + New Role
-    </a>
-
-</div>
-
-<div class="card shadow-sm">
+<div class="card border-0 shadow-sm mb-4">
 
     <div class="card-body">
 
-        <form method="GET" class="row mb-4">
+        <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4">
 
-            <div class="col-md-10">
+            <div>
 
-                <input
-                    type="text"
-                    name="search"
-                    value="{{ request('search') }}"
-                    class="form-control"
-                    placeholder="Search Role">
+                <h3 class="fw-bold mb-1">
+
+                    Roles
+
+                </h3>
+
+                <p class="text-muted mb-0">
+
+                    Manage roles and their permissions.
+
+                </p>
 
             </div>
 
-            <div class="col-md-2">
+            <a
+                href="{{ route('roles.create') }}"
+                class="btn btn-primary">
 
-                <button class="btn btn-primary w-100">
+                <i class="bi bi-plus-lg"></i>
+
+                Create Role
+
+            </a>
+
+        </div>
+
+        <form method="GET" class="row g-3">
+
+            <div class="col-lg-10">
+
+                <div class="input-group">
+
+                    <span class="input-group-text bg-white border-end-0">
+
+                        <i class="bi bi-search"></i>
+
+                    </span>
+
+                    <input
+                        type="text"
+                        name="search"
+                        value="{{ request('search') }}"
+                        class="form-control border-start-0"
+                        placeholder="Search roles...">
+
+                </div>
+
+            </div>
+
+            <div class="col-lg-2">
+
+                <button class="btn btn-primary btn-sm w-100">
 
                     Search
 
@@ -43,6 +73,13 @@
 
         </form>
 
+    </div>
+
+</div>
+
+<x-admin.table
+    title="All Roles"
+    subtitle="Manage every role in PulseDesk">
         <table class="table table-hover align-middle">
 
             <thead>
@@ -79,13 +116,17 @@
 
                         <td>
 
-                            {{ $role->name }}
+                             <div class="fw-semibold">
+
+                                {{ $role->name }}
+
+                            </div>
 
                         </td>
 
                         <td>
 
-                            <span class="badge bg-primary">
+                            <span class="badge rounded-pill bg-primary">
 
                                 {{ $role->permissions->count() }}
 
@@ -95,7 +136,7 @@
 
                         <td>
 
-                            <span class="badge bg-info">
+                            <span class="badge rounded-pill bg-info">
 
                                 {{ $role->users->count() }}
 
@@ -115,9 +156,9 @@
 
                                 <a
                                     href="{{ route('roles.edit', $role) }}"
-                                    class="btn btn-warning btn-sm">
+                                    class="btn btn-sm btn-outline-primary">
 
-                                    Edit
+                                    <i class="bi bi-pencil"></i>
 
                                 </a>
 
@@ -132,10 +173,10 @@
                                     @method('DELETE')
 
                                     <button
-                                        class="btn btn-danger btn-sm"
+                                        class="btn btn-sm btn-outline-danger"
                                         onclick="return confirm('Delete this role?')">
 
-                                        Delete
+                                        <i class="bi bi-trash"></i>
 
                                     </button>
 
@@ -155,11 +196,27 @@
 
                         <td colspan="6" class="text-center py-5">
 
-                            <h5>
+                            <h5 class="mb-2">
 
                                 No Roles Found
 
                             </h5>
+
+                            <p class="text-muted mb-3">
+
+                                Create your first role to manage user permissions.
+
+                            </p>
+
+                            <a
+                                href="{{ route('roles.create') }}"
+                                class="btn btn-primary">
+
+                                <i class="bi bi-plus-lg me-2"></i>
+
+                                Create Role
+
+                            </a>
 
                         </td>
 
@@ -171,14 +228,12 @@
 
         </table>
 
-        <div class="mt-3">
+        <div class="px-4 py-3">
 
             {{ $roles->links() }}
 
         </div>
 
-    </div>
-
-</div>
+</x-admin.table>
 
 @endsection

@@ -17,6 +17,7 @@
         </div>
 
         <a href="{{ route('surveys.index') }}" class="btn btn-secondary">
+            <i class="bi bi-arrow-left me-2"></i>
             Back
         </a>
 
@@ -24,7 +25,7 @@
 
     <div class="card shadow-sm">
 
-        <div class="card-header">
+        <div class="card-header  bg-white">
 
             <h4>Survey </h4>
 
@@ -61,20 +62,47 @@
 
                 </template>
 
-                {{-- Add questions button --}}
-                <button
-                    type="button"
-                    id="addQuestion"
-                    class="btn btn-success">
+    <div class="border-top mt-5 pt-4">
 
-                    + Add Question
+                    <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
 
-                </button>
+                        <button
+                            type="button"
+                            id="addQuestion"
+                            class="btn btn-outline-success">
 
-                {{-- Update survey button --}}
-                <button type="submit" class="btn btn-primary w-full mt-4">
-                    Update Survey
-                </button>
+                            <i class="bi bi-plus-circle me-2"></i>
+
+                            Add Question
+
+                        </button>
+
+                        <div class="d-flex gap-2">
+
+                            <a
+                                href="{{ route('surveys.index') }}"
+                                class="btn btn-light border">
+
+                                Cancel
+
+                            </a>
+
+                            <button
+                                type="submit"
+                                class="btn btn-primary">
+
+                                <i class="bi bi-check-lg me-2"></i>
+
+                                Update Survey
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
 
             </form>
 

@@ -36,13 +36,20 @@ class RolePermissionSeeder extends Seeder
             'responses.delete',
 
             'reports.view',
+            'reports.show',
 
             'users.view',
             'users.create',
             'users.edit',
             'users.delete',
 
-            'settings.manage',
+            'roles.view',
+            'roles.create',
+            'roles.edit',
+            'roles.delete',
+
+            'settings.view',
+            'settings.edit',
 
         ];
 
@@ -66,7 +73,7 @@ class RolePermissionSeeder extends Seeder
             'name' => 'Staff'
         ]);
 
-        $superAdmin->syncPermissions(Permission::all());
+        $superAdmin->givePermissionTo(Permission::all());
 
         $admin->syncPermissions([
 
@@ -86,6 +93,14 @@ class RolePermissionSeeder extends Seeder
             'responses.delete',
 
             'reports.view',
+            'reports.show',
+
+            'users.view',
+
+            'roles.view',
+
+            'settings.view',
+            'settings.edit',
 
         ]);
 
@@ -98,6 +113,9 @@ class RolePermissionSeeder extends Seeder
             'surveys.view',
 
             'responses.view',
+
+            'reports.view',
+            'reports.show',
 
         ]);
 

@@ -4,19 +4,17 @@
 
 @section('content')
 
-<div class="d-flex justify-content-between align-items-center mb-4">
+<x-admin.index-toolbar
+    title="Clients"
+    subtitle="Manage all client organizations."
+    :createRoute="route('clients.create')"
+    buttonText="Add Client"
+    searchPlaceholder="Search clients..." />
+    
 
-    <h2>Clients</h2>
-
-    <a href="{{ route('clients.create') }}" class="btn btn-primary">
-        + New Client
-    </a>
-
-</div>
-
-<div class="card shadow-sm">
-
-    <div class="card-body">
+<x-admin.table
+    title="All Clients"
+    subtitle="Manage all registered client organizations">
 
         <table class="table table-hover align-middle">
 
@@ -76,11 +74,31 @@
 
                         </td>
 
-                        <td>{{ $client->company_name }}</td>
+                        <td>
+                             <div class="fw-semibold">
 
-                        <td>{{ $client->contact_person }}</td>
+                                {{ $client->company_name }}
 
-                        <td>{{ $client->email }}</td>
+                            </div>
+                        </td>
+
+                        <td class="text-muted">
+
+                            {{ $client->contact_person }}
+
+                        </td>
+
+                        <td>
+
+                            <a
+                                href="mailto:{{ $client->email }}"
+                                class="text-decoration-none">
+
+                                {{ $client->email }}
+
+                            </a>
+
+                        </td>
 
                         <td>{{ $client->phone }}</td>
 
@@ -100,9 +118,10 @@
 
                                 <a
                                     href="{{ route('clients.edit', $client) }}"
-                                    class="btn btn-sm btn-warning">
+                                    class="btn btn-sm btn-outline-primary"
+                                    title="Edit">
 
-                                    Edit
+                                    <i class="bi bi-pencil"></i>
 
                                 </a>
 
@@ -116,10 +135,11 @@
 
                                     <button
                                         type="submit"
-                                        class="btn btn-sm btn-danger"
+                                        class="btn btn-sm btn-outline-danger"
+                                        title="Delete"
                                         onclick="return confirm('Are you sure you want to delete this client?')">
 
-                                        Delete
+                                        <i class="bi bi-trash"></i>
 
                                     </button>
 
@@ -167,14 +187,13 @@
 
         </table>
 
-        <div class="mt-3">
+        <div class="px-4 py-3">
 
             {{ $clients->links() }}
 
         </div>
 
-    </div>
 
-</div>
+</x-admin.table-card>
 
 @endsection

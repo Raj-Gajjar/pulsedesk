@@ -4,16 +4,37 @@
 
 @section('content')
 
-<div class="d-flex justify-content-between align-items-center mb-4">
+<div class="card border-0 shadow-sm mb-4">
 
-    <h2>Response Details</h2>
+    <div class="card-body d-flex justify-content-between align-items-center flex-wrap gap-3">
 
-    <a href="{{ route('responses.index') }}"
-        class="btn btn-secondary">
+        <div>
 
-        Back
+            <h3 class="fw-bold mb-1">
 
-    </a>
+                Response Details
+
+            </h3>
+
+            <p class="text-muted mb-0">
+
+                View submitted survey information and answers.
+
+            </p>
+
+        </div>
+
+        <a
+            href="{{ route('responses.index') }}"
+            class="btn btn-secondary border">
+
+            <i class="bi bi-arrow-left me-2"></i>
+
+            Back
+
+        </a>
+
+    </div>
 
 </div>
 
@@ -25,13 +46,17 @@
 
             <div class="col-md-6 mb-3">
 
-                <strong>Survey</strong>
+                <div class="fw-semibold mb-1">
 
-                <p class="mb-0">
+                    Survey
+
+                </div>
+
+                <div class="fw-semibold">
 
                     {{ $response->survey->title }}
 
-                </p>
+                </div>
 
             </div>
 
@@ -91,9 +116,13 @@
 
 <div class="card shadow-sm">
 
-    <div class="card-header">
+    <div class="card-header bg-white">
 
-        <strong>Survey Answers</strong>
+        <h5 class="fw-bold mb-0">
+
+            Survey Answers
+
+        </h5>
 
     </div>
 
@@ -101,9 +130,9 @@
 
         @forelse($response->answers as $answer)
 
-            <div class="mb-4">
+            <div class="border rounded-3 p-3 mb-3 bg-light-subtle">
 
-                <h6 class="fw-bold">
+                <h6 class="fw-semibold mb-3">
 
                     {{ $loop->iteration }}.
                     {{ $answer->question->question }}
@@ -118,7 +147,7 @@
 
                 @if(is_array($value))
 
-                    <ul class="mb-0">
+                    <ul class="mb-0 ps-3">
 
                         @foreach($value as $item)
 
@@ -148,11 +177,23 @@
 
         @empty
 
-            <p class="text-muted">
+            <div class="text-center py-5">
 
-                No answers found.
+                <i class="bi bi-chat-square-text display-5 text-secondary"></i>
 
-            </p>
+                <h5 class="mt-3">
+
+                    No Answers Found
+
+                </h5>
+
+                <p class="text-muted mb-0">
+
+                    This response doesn't contain any recorded answers.
+
+                </p>
+
+            </div>
 
         @endforelse
 

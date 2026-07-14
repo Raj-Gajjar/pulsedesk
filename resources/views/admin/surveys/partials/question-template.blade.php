@@ -3,15 +3,16 @@
 
     <div class="card-header d-flex justify-content-between align-items-center">
 
-        <h5 class="mb-0 question-title">
+        <h5 class="question-title fw-semibold mb-0">
             Question #1
         </h5>
 
         <button
             type="button"
-            class="btn btn-sm btn-outline-danger remove-question">
+            class="btn btn-outline-danger btn-sm remove-question"
+            title="Remove Question">
 
-            Remove
+            <i class="bi bi-trash"></i>
 
         </button>
 
@@ -21,7 +22,7 @@
 
         <div class="mb-3">
 
-            <label class="form-label">
+            <label class="form-label fw-semibold">
                 Question
             </label>
 
@@ -37,7 +38,7 @@
 
             <div class="col-md-6">
 
-                <label class="form-label">
+                <label class="form-label fw-semibold">
                     Type
                 </label>
 
@@ -67,7 +68,7 @@
                         checked
                         data-name="questions[INDEX][required]">
 
-                    <label class="form-check-label">
+                    <label class="form-label fw-semibold">
 
                         Required
 
@@ -79,7 +80,16 @@
 
         </div>
 
-        <div class="options-area mt-4"></div>
+        <div class="options-area mt-4">
+
+            <small class="text-muted">
+
+                Options will appear when you select
+                Radio, Checkbox or Dropdown.
+
+            </small>
+
+        </div>
 
     </div>
 

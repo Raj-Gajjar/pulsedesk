@@ -60,8 +60,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if (type === 'rating') {
 
             optionsArea.innerHTML = `
-                <div class="mt-3 fs-3">
-                    ⭐ ⭐ ⭐ ⭐ ⭐
+                <div class="text-warning fs-4">
+                    ★ ★ ★ ★ ★
                 </div>
             `;
 
@@ -129,6 +129,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
     }
+
 
 });
 

@@ -4,97 +4,70 @@
 
 @section('content')
 
-<div class="mb-4">
+<div class="card border-0 shadow-sm mb-4">
 
-    <h2>Reports Dashboard</h2>
+    <div class="card-body">
 
-    <p class="text-muted">
+        <h3 class="fw-bold mb-1">
 
-        Survey analytics overview
+            Reports
 
-    </p>
+        </h3>
+
+        <p class="text-muted mb-0">
+
+            View survey performance and analytics.
+
+        </p>
+
+    </div>
 
 </div>
+
 
 <div class="row g-4">
 
     <div class="col-md-6 col-xl-3">
 
-        <div class="card shadow-sm border-0">
-
-            <div class="card-body">
-
-                <h6 class="text-muted">
-                    Total Clients
-                </h6>
-
-                <h2>
-                    {{ $stats['clients'] }}
-                </h2>
-
-            </div>
-
-        </div>
+        <x-admin.stat-card
+            title="Total Clients"
+            :value="$stats['clients']"
+            icon="bi-buildings"
+            color="primary"
+        />
 
     </div>
 
     <div class="col-md-6 col-xl-3">
 
-        <div class="card shadow-sm border-0">
-
-            <div class="card-body">
-
-                <h6 class="text-muted">
-                    Total Surveys
-                </h6>
-
-                <h2>
-                    {{ $stats['surveys'] }}
-                </h2>
-
-            </div>
-
-        </div>
+        <x-admin.stat-card
+            title="Total Surveys"
+            :value="$stats['surveys']"
+            icon="bi-ui-checks-grid"
+            color="success"
+        />
 
     </div>
 
     <div class="col-md-6 col-xl-3">
 
-        <div class="card shadow-sm border-0">
-
-            <div class="card-body">
-
-                <h6 class="text-muted">
-                    Total Responses
-                </h6>
-
-                <h2>
-                    {{ $stats['responses'] }}
-                </h2>
-
-            </div>
-
-        </div>
+        <x-admin.stat-card
+            title="Responses"
+            :value="$stats['responses']"
+            icon="bi-chat-left-text"
+            color="warning"
+        />
 
     </div>
 
     <div class="col-md-6 col-xl-3">
 
-        <div class="card shadow-sm border-0">
-
-            <div class="card-body">
-
-                <h6 class="text-muted">
-                    Avg Responses / Survey
-                </h6>
-
-                <h2>
-                    {{ $stats['average_responses'] }}
-                </h2>
-
-            </div>
-
-        </div>
+        <x-admin.stat-card
+            title="Avg / Survey"
+            :value="$stats['average_responses']"
+            icon="bi-graph-up-arrow"
+            color="info"
+        />
 
     </div>
 
@@ -106,15 +79,19 @@
 
         <div class="card shadow-sm border-0">
 
-            <div class="card-header">
+            <div class="card-header bg-white">
 
-                Survey Status
+                <h5 class="fw-bold mb-0">
+
+                    Survey Status
+
+                </h5>
 
             </div>
 
             <div class="card-body">
 
-                <table class="table mb-0">
+                <table class="table table-hover align-middle mb-0">
 
                     <tr>
                         <td>Published</td>
@@ -139,9 +116,11 @@
 
     </div>
 
-    <div class="col-lg-12">
+    <div class="col-lg-12 mt-5">
 
-        <div class="card shadow-sm border-0 mt-4">
+        <x-admin.table
+            title="Survey Reports"
+            subtitle="Survey analytics overview">
 
             <div class="card-header bg-white">
 
@@ -195,13 +174,21 @@
 
                                 <td>
 
-                                    {{ $survey->title }}
+                                    <div class="fw-semibold">
+
+                                        {{ $survey->title }}
+
+                                    </div>
 
                                 </td>
 
                                 <td>
 
-                                    {{ $survey->client->company_name }}
+                                    <span class="text-muted">
+
+                                        {{ $survey->client->company_name }}
+
+                                    </span>
 
                                 </td>
 
@@ -236,9 +223,10 @@
 
                                     <a
                                         href="{{ route('reports.show', $survey) }}"
-                                        class="btn btn-sm btn-primary">
+                                        class="btn btn-sm btn-outline-primary"
+                                        title="View Report">
 
-                                        View Report
+                                        <i class="bi bi-bar-chart-line"></i>
 
                                     </a>
 
@@ -252,7 +240,23 @@
 
                                 <td colspan="6" class="text-center py-4">
 
-                                    No Surveys Found
+                                    <div class="text-center py-5">
+
+                                        <i class="bi bi-bar-chart display-5 text-secondary"></i>
+
+                                        <h5 class="mt-3">
+
+                                            No Reports Available
+
+                                        </h5>
+
+                                        <p class="text-muted mb-0">
+
+                                            Reports will appear after surveys receive responses.
+
+                                        </p>
+
+                                    </div>
 
                                 </td>
 
@@ -272,7 +276,7 @@
 
             </div>
 
-        </div>
+        </x-admin.table>
 
     </div>
 

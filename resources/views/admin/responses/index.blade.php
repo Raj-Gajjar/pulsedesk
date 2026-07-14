@@ -4,15 +4,30 @@
 
 @section('content')
 
-<div class="d-flex justify-content-between align-items-center mb-4">
+<div class="card border-0 shadow-sm mb-4">
 
-    <h2>Responses</h2>
+    <div class="card-body">
+
+        <h3 class="fw-bold mb-1">
+
+            Responses
+
+        </h3>
+
+        <p class="text-muted mb-0">
+
+            Review all submitted survey responses.
+
+        </p>
+
+    </div>
 
 </div>
 
-<div class="card shadow-sm">
 
-    <div class="card-body">
+<x-admin.table
+    title="All Responses"
+    subtitle="Latest survey submissions">
 
         <table class="table table-hover align-middle">
 
@@ -50,19 +65,31 @@
 
                         <td>
 
-                            {{ $response->survey->title }}
+                            <div class="fw-semibold">
+
+                                {{ $response->survey->title }}
+
+                            </div>
 
                         </td>
 
                         <td>
 
-                            {{ $response->respondent_name ?: 'Anonymous' }}
+                            <div class="fw-semibold">
+
+                                {{ $response->respondent_name ?: 'Anonymous' }}
+
+                            </div>
 
                         </td>
 
                         <td>
 
-                            {{ $response->respondent_email ?: '-' }}
+                            <span class="text-muted">
+
+                                {{ $response->respondent_email ?: '-' }}
+
+                            </span>
 
                         </td>
 
@@ -78,9 +105,10 @@
 
                                 <a
                                     href="{{ route('responses.show', $response) }}"
-                                    class="btn btn-sm btn-info">
+                                    class="btn btn-sm btn-outline-primary"
+                                    title="View Response">
 
-                                    View
+                                    <i class="bi bi-eye"></i>
 
                                 </a>
 
@@ -94,10 +122,11 @@
 
                                     <button
                                         type="submit"
-                                        class="btn btn-sm btn-danger"
+                                        class="btn btn-sm btn-outline-danger"
+                                        title="Delete Response"
                                         onclick="return confirm('Delete this response?')">
 
-                                        Delete
+                                        <i class="bi bi-trash"></i>
 
                                     </button>
 
@@ -115,15 +144,18 @@
 
                         <td colspan="6" class="text-center py-5">
 
-                            <h5>
+                           <i class="bi bi-inbox display-5 text-secondary"></i>
 
-                                No Responses Found
+                            <h5 class="mt-3 mb-2">
+
+                                No Responses Yet
 
                             </h5>
 
-                            <p class="text-muted mb-0">
 
-                                Responses will appear here after users submit a survey.
+                           <p class="text-muted">
+
+                                Survey submissions will appear here once users start responding.
 
                             </p>
 
@@ -137,14 +169,12 @@
 
         </table>
 
-        <div class="mt-3">
+        <div class="px-4 py-3">
 
             {{ $responses->links() }}
 
         </div>
 
-    </div>
-
-</div>
+</x-admin.table>
 
 @endsection

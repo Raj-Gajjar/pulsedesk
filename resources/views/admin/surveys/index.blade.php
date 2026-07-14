@@ -4,69 +4,116 @@
 
 @section('content')
 
-<div class="d-flex justify-content-between align-items-center mb-4">
-
-    <h2>Surveys</h2>
-
-    <a href="{{ route('surveys.create') }}" class="btn btn-primary">
-        + New Survey
-    </a>
-
-</div>
-
-<div class="card shadow-sm">
+<div class="card border-0 shadow-sm mb-4">
 
     <div class="card-body">
 
-            <form method="GET" class="row mb-4">
+        <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4">
 
-                <div class="col-md-7">
+            <div>
+
+                <h3 class="fw-bold mb-1">
+
+                    Surveys
+
+                </h3>
+
+                <p class="text-muted mb-0">
+
+                    Create, publish and manage your surveys.
+
+                </p>
+
+            </div>
+
+            <a
+                href="{{ route('surveys.create') }}"
+                class="btn btn-primary">
+
+                <i class="bi bi-plus-lg"></i>
+
+                Create Survey
+
+            </a>
+
+        </div>
+
+        <form method="GET" class="row g-3">
+
+            <div class="col-lg-7">
+
+                <div class="input-group">
+
+                    <span class="input-group-text bg-white border-end-0">
+
+                        <i class="bi bi-search"></i>
+
+                    </span>
 
                     <input
                         type="text"
                         name="search"
                         value="{{ request('search') }}"
-                        class="form-control"
-                        placeholder="Search Survey">
+                        class="form-control border-start-0"
+                        placeholder="Search surveys...">
 
                 </div>
 
-                <div class="col-md-3">
+            </div>
 
-                    <select name="status" class="form-select">
+            <div class="col-lg-3">
 
-                        <option value="">All Status</option>
+                <select
+                    name="status"
+                    class="form-select">
 
-                        <option value="draft"
-                            {{ request('status') == 'draft' ? 'selected' : '' }}>
-                            Draft
-                        </option>
+                    <option value="">All Status</option>
 
-                        <option value="published"
-                            {{ request('status') == 'published' ? 'selected' : '' }}>
-                            Published
-                        </option>
+                    <option value="draft"
+                        @selected(request('status')=='draft')>
 
-                        <option value="closed"
-                            {{ request('status') == 'closed' ? 'selected' : '' }}>
-                            Closed
-                        </option>
+                        Draft
 
-                    </select>
+                    </option>
 
-                </div>
+                    <option value="published"
+                        @selected(request('status')=='published')>
 
-                <div class="col-md-2">
+                        Published
 
-                    <button class="btn btn-primary w-100">
+                    </option>
 
-                        Search
+                    <option value="closed"
+                        @selected(request('status')=='closed')>
 
-                    </button>
+                        Closed
 
-                </div>
+                    </option>
 
-            </form>
+                </select>
+
+            </div>
+
+            <div class="col-lg-2">
+
+                <button
+                    class="btn btn-primary w-100">
+
+                    Search
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+<x-admin.table
+    title="All Surveys"
+    subtitle="Manage every survey in PulseDesk">
 
         <table class="table table-hover align-middle">
 
@@ -86,8 +133,6 @@
 
                     <th>Created</th>
 
-                    <th>Public Link</th>
-
                     <th width="180">Action</th>
 
                 </tr>
@@ -102,9 +147,21 @@
 
                         <td>{{ $loop->iteration }}</td>
 
-                        <td>{{ $survey->title }}</td>
+                        <td>
 
-                        <td>{{ $survey->client->company_name }}</td>
+                            <div class="fw-semibold">
+
+                                {{ $survey->title }}
+
+                            </div>
+
+                        </td>
+
+                        <td class="text-muted">
+
+                            {{ $survey->client->company_name }}
+
+                        </td>
 
                         <td>
                             <span class="badge {{ $survey->responses_count ? 'bg-success' : 'bg-secondary' }}">
@@ -134,21 +191,20 @@
                         <td>{{ $survey->created_at->format('d M Y') }}</td>
 
                         <td>
-                            <a href="{{ route('public-surveys.show', $survey) }}"
-                                target="_blank"
-                                class="btn btn-sm btn-info">
-
-                                Open Survey
-
-                            </a>
-                        </td>
-
-                        <td>
                             <div class="d-flex gap-2">
 
+                                <a
+                                    href="{{ route('public-surveys.show', $survey) }}"
+                                    target="_blank"
+                                    class="btn btn-sm btn-outline-success">
+
+                                    <i class="bi bi-box-arrow-up-right"></i>
+
+                                </a>
+
                                 <a href="{{ route('surveys.edit', $survey) }}"
-                                    class="btn btn-sm btn-warning">
-                                    Edit
+                                    class="btn btn-sm btn-outline-primary">
+                                    <i class="bi bi-pencil"></i>
                                 </a>
 
 
@@ -162,10 +218,10 @@
 
                                     <button
                                         type="submit"
-                                        class="btn btn-sm btn-danger"
+                                        class="btn btn-sm btn-outline-danger"
                                         onclick="return confirm('Are you sure you want to delete this survey?')">
 
-                                        Delete
+                                        <i class="bi bi-trash"></i>
 
                                     </button>
 
@@ -206,14 +262,12 @@
 
         </table>
 
-        <div class="mt-3">
+        <div class="px-4 py-3">
 
             {{ $surveys->links() }}
 
         </div>
 
-    </div>
-
-</div>
+</x-admin.table>
 
 @endsection

@@ -8,9 +8,19 @@ use App\Models\Setting;
 use App\Http\Requests\UpdateSettingRequest;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 
-class SettingController extends Controller
+class SettingController extends Controller implements HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+
+            'permission:settings.manage',
+
+        ];
+    }
 
     public function edit()
     {

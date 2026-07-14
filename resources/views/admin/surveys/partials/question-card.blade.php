@@ -3,15 +3,16 @@
 
     <div class="card-header d-flex justify-content-between align-items-center">
 
-        <h5 class="question-title">
+        <h5 class="question-title fw-semibold mb-0">
             Question #{{ $index + 1 }}
         </h5>
 
         <button
             type="button"
-            class="btn btn-outline-danger btn-sm remove-question">
+            class="btn btn-outline-danger btn-sm remove-question"
+            title="Remove Question">
 
-            Remove
+            <i class="bi bi-trash"></i>
 
         </button>
 
@@ -23,7 +24,7 @@
 
         <div class="mb-3">
 
-            <label class="form-label">
+            <label class="form-label fw-semibold">
                 Question
             </label>
 
@@ -41,7 +42,7 @@
 
             <div class="col-md-6">
 
-                <label class="form-label">
+                <label class="form-label fw-semibold">
 
                     Type
 
@@ -123,6 +124,16 @@
                         value="{{ $option->option }}">
 
                 </div>
+                
+                @if($question->options->isEmpty())
+
+                    <small class="text-muted d-block mb-3">
+
+                        Click "Add Option" to create choices.
+
+                    </small>
+
+                @endif
 
             @endforeach
 
@@ -130,7 +141,7 @@
                 type="button"
                 class="btn btn-outline-primary btn-sm add-option">
 
-                + Add Option
+                <i class="bi bi-plus-lg"></i> Add Option
 
             </button>
 
