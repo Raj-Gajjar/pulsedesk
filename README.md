@@ -1,6 +1,6 @@
 <div align="center">
 
-https://github.com/Raj-Gajjar/pulsedesk/blob/e6d950d791f48b9442087f169d35a8bdfe34a88d/PulseDesk-login.png
+![PulseDesk Login](PulseDesk-login.png)
 
 # 🚀 PulseDesk
 
